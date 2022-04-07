@@ -132,22 +132,29 @@ def load_img(path):
 
 def run_detector(detector, path):
   img = load_img(path)
-
-  converted_img  = tf.image.convert_image_dtype(img, tf.float32)[tf.newaxis, ...]
+  print("Before convert img")
+  converted_img  = tf.image.convert_image_dtype(img, tf.uint8)[tf.newaxis, ...]
+  print("After convert img")
   start_time = time.time()
   result = detector(converted_img)
+  print("After detector")
   end_time = time.time()
 
   result = {key:value.numpy() for key,value in result.items()}
 
   print("Found %d objects." % len(result["detection_scores"]))
   print("Inference time: ", end_time-start_time)
+  print(result["detection_boxes"])
+  print(result["detection_scores"])
+  print(result["detection_classes"])
 
-  image_with_boxes = draw_boxes(
-      img.numpy(), result["detection_boxes"],
-      result["detection_class_entities"], result["detection_scores"])
 
-  display_image(image_with_boxes)
+#   image_with_boxes = draw_boxes(
+#       img.numpy(), result["detection_boxes"],
+#       result["detection_classes"], result["detection_scores"])
+
+#   display_image(image_with_boxes)
+
 
 
 # By Heiko Gorski, Source: https://commons.wikimedia.org/wiki/File:Naxos_Taverna.jpg
