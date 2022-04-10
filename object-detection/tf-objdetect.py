@@ -1,5 +1,6 @@
 #@title Imports and function definitions
 import matplotlib
+from tensorflow import keras
 matplotlib.use('Agg')
 # For running inference on the TF-Hub module.
 import tensorflow as tf
@@ -161,7 +162,8 @@ def run_detector(detector, path):
 # By Heiko Gorski, Source: https://commons.wikimedia.org/wiki/File:Naxos_Taverna.jpg
 image_url = "https://upload.wikimedia.org/wikipedia/commons/6/60/Naxos_Taverna.jpg"  #@param
 downloaded_image_path = download_and_resize_image(image_url, 640, 640, True)
-mod_handle = "https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2"
-detector = hub.load(mod_handle)
+# mod_handle = "https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2"
+# detector = hub.load(mod_handle)
+detector = keras.models.load_model("./tensorRT/ssd_mobilenet_v2_trt")
 
 run_detector(detector, downloaded_image_path)
