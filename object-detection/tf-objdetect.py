@@ -161,7 +161,7 @@ def run_detector(detector, path):
 # By Heiko Gorski, Source: https://commons.wikimedia.org/wiki/File:Naxos_Taverna.jpg
 image_url = "https://upload.wikimedia.org/wikipedia/commons/6/60/Naxos_Taverna.jpg"  #@param
 downloaded_image_path = download_and_resize_image(image_url, 640, 640, True)
-mod_handle = "https://tfhub.dev/tensorflow/ssd_mobilenet_v1/fpn_640x640/1"
+mod_handle = "https://tfhub.dev/tensorflow/faster_rcnn/inception_resnet_v2_640x640/1"
 detector = hub.load(mod_handle)
 
 run_detector(detector, downloaded_image_path)
