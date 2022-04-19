@@ -106,7 +106,9 @@ def main(_argv):
 
         # run detections on standard model
         batch_data = tf.constant(image_data)
+        print('before inference')
         pred_bbox = infer(batch_data)
+        print('after inference')
         for key, value in pred_bbox.items():
             boxes = value[:, :, 0:4]
             pred_conf = value[:, :, 4:]
