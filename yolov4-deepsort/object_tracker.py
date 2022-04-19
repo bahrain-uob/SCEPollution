@@ -10,6 +10,8 @@ from absl.flags import FLAGS
 import core.utils as utils
 from core.yolov4 import filter_boxes
 from tensorflow.python.saved_model import tag_constants
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
 from core.config import cfg
 from PIL import Image
 import cv2
@@ -49,9 +51,8 @@ def main(_argv):
     tracker = Tracker(metric)
 
     # load configuration for object detector
-    # config = ConfigProto()
-    # config.gpu_options.allow_growth = True
-    # session = InteractiveSession(config=config)
+    config = ConfigProto()
+    session = InteractiveSession(config=config)
     STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
     input_size = FLAGS.size
     video_path = FLAGS.video
