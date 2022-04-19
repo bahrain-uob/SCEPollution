@@ -6,7 +6,7 @@ import tensorflow as tf
 #     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 import numpy as np
 import cv2
-from tensorflow.python.compiler.tensorrt import trt_convert as trt
+# from tensorflow.python.compiler.tensorrt import trt_convert as trt
 import core.utils as utils
 from tensorflow.python.saved_model import signature_constants
 import os
@@ -39,20 +39,21 @@ def representative_data_gen():
     else:
       continue
   batched_input = tf.constant(batched_input)
-  
+  print(batched_input)
+  print('fh')
   yield (batched_input,)
 
 def save_trt():
 
-  if FLAGS.quantize_mode == 'int8':
-    conversion_params = trt.DEFAULT_TRT_CONVERSION_PARAMS._replace(
-      precision_mode=trt.TrtPrecisionMode.INT8,
-      max_workspace_size_bytes=4000000000,
-      use_calibration=True)
-    converter = trt.TrtGraphConverterV2(
-      input_saved_model_dir=FLAGS.weights,
-      conversion_params=conversion_params)
-    converter.convert(calibration_input_fn=representative_data_gen)
+  # if FLAGS.quantize_mode == 'int8':
+  #   conversion_params = trt.DEFAULT_TRT_CONVERSION_PARAMS._replace(
+  #     precision_mode=trt.TrtPrecisionMode.INT8,
+  #     max_workspace_size_bytes=4000000000,
+  #     use_calibration=True)
+  #   converter = trt.TrtGraphConverterV2(
+  #     input_saved_model_dir=FLAGS.weights,
+  #     conversion_params=conversion_params)
+  #   converter.convert(calibration_input_fn=representative_data_gen)
   # elif FLAGS.quantize_mode == 'float16':
   #   conversion_params = trt.DEFAULT_TRT_CONVERSION_PARAMS._replace(
   #     precision_mode=trt.TrtPrecisionMode.FP16,
@@ -72,8 +73,8 @@ def save_trt():
   # converter.convert()
   # converter.build(input_fn=representative_data_gen)
   # converter.save(output_saved_model_dir=FLAGS.output)
+  print(representative_data_gen())
   print('Done Converting to TF-TRT')
-
   # saved_model_loaded = tf.saved_model.load(FLAGS.output)
   # graph_func = saved_model_loaded.signatures[
   #   signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY]

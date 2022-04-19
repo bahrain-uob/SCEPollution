@@ -3,8 +3,8 @@ import os
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import time
 import tensorflow as tf
-from tensorflow.python.client import device_lib
-print(tf.config.list_physical_devices('GPU'))
+# from tensorflow.python.client import device_lib
+# print(tf.config.list_physical_devices('GPU'))
 from absl import app, flags, logging
 from absl.flags import FLAGS
 import core.utils as utils
