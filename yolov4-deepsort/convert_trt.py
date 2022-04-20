@@ -22,7 +22,7 @@ flags.DEFINE_integer('loop', 1, 'loop')
 
 def representative_data_gen():
   fimage = open(FLAGS.dataset).read().split()
-  batched_input = np.zeros((FLAGS.loop, FLAGS.input_size, FLAGS.input_size, 3), dtype=np.float32)
+  batched_input = np.zeros(FLAGS.loop, FLAGS.input_size, FLAGS.input_size, 3))
   for input_value in range(FLAGS.loop):
     print('Data path:')
     print(fimage[input_value])
