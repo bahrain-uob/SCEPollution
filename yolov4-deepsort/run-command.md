@@ -13,3 +13,5 @@ python object_tracker.py --weights ./checkpoints/yolov4-tiny-416 --model yolov4 
 
  # nvidia container
  docker pull nvcr.io/nvidia/tensorflow:22.03-tf2-py3
+
+ docker run --gpus all -it --rm nvcr.io/nvidia/tensorflow:22.03-tf2-py3
