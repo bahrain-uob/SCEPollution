@@ -58,22 +58,22 @@ def save_trt():
     print(representative_data_gen())
     print('Done Converting to TF-TRT')
 
-    saved_model_loaded = tf.saved_model.load(FLAGS.output)
-    graph_func = saved_model_loaded.signatures[
-      signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY]
-    trt_graph = graph_func.graph.as_graph_def()
-    for n in trt_graph.node:
-      print(n.op)
-      if n.op == "TRTEngineOp":
-        print("Node: %s, %s" % (n.op, n.name.replace("/", "_")))
-      else:
-        print("Exclude Node: %s, %s" % (n.op, n.name.replace("/", "_")))
-    logging.info("model saved to: {}".format(FLAGS.output))
+    # saved_model_loaded = tf.saved_model.load(FLAGS.output)
+    # graph_func = saved_model_loaded.signatures[
+    #   signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY]
+    # trt_graph = graph_func.graph.as_graph_def()
+    # for n in trt_graph.node:
+    #   print(n.op)
+    #   if n.op == "TRTEngineOp":
+    #     print("Node: %s, %s" % (n.op, n.name.replace("/", "_")))
+    #   else:
+    #     print("Exclude Node: %s, %s" % (n.op, n.name.replace("/", "_")))
+    # logging.info("model saved to: {}".format(FLAGS.output))
 
-    trt_engine_nodes = len([1 for n in trt_graph.node if str(n.op) == 'TRTEngineOp'])
-    print("numb. of trt_engine_nodes in TensorRT graph:", trt_engine_nodes)
-    all_nodes = len([1 for n in trt_graph.node])
-    print("numb. of all_nodes in TensorRT graph:", all_nodes)
+    # trt_engine_nodes = len([1 for n in trt_graph.node if str(n.op) == 'TRTEngineOp'])
+    # print("numb. of trt_engine_nodes in TensorRT graph:", trt_engine_nodes)
+    # all_nodes = len([1 for n in trt_graph.node])
+    # print("numb. of all_nodes in TensorRT graph:", all_nodes)
 
 def main(_argv):
   save_trt()
