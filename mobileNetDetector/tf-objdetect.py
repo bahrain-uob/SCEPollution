@@ -1,7 +1,6 @@
 #@title Imports and function definitions
 import matplotlib
 from tensorflow import keras
-matplotlib.use('Agg')
 # For running inference on the TF-Hub module.
 import tensorflow as tf
 
