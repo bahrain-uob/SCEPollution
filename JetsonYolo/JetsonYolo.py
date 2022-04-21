@@ -39,9 +39,11 @@ while vid.isOpened():
             color = Object_colors[Object_classes.index(label)]
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
-            print(label)
-        end_time=time.time()-start_time
-        print("Inference time = " + str(end_time))
+            # print(label)
+        # end_time=time.time()-start_time
+        # print("Inference time = " + str(end_time))
+        fps = 1.0 / (time.time() - start_time)
+        print("FPS: %.2f" % fps)
     else:
         print('Video has ended or failed, try a different video format!')
         break
