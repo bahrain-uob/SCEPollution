@@ -1,6 +1,6 @@
-./yolov4-deepsort/env
+/yolov4-deepsort/env
 
 /env
 
-./yolov4-deepsort/checkpoints/*
-./data/yolov4-tiny.weights
+/yolov4-deepsort/checkpoints/*
+/data/yolov4-tiny.weights

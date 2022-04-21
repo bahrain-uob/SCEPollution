@@ -1,3 +1,4 @@
+from time import time
 import cv2
 import numpy as np
 from elements.yolo import OBJ_DETECTION
@@ -54,6 +55,7 @@ out = None
 while vid.isOpened():
     return_value, frame = vid.read()
     if return_value:
+        start_time = time.time()
         objs = Object_detector.detect(frame)
         for obj in objs:
             # print(obj)
@@ -61,12 +63,15 @@ while vid.isOpened():
             score = obj['score']
             [(xmin,ymin),(xmax,ymax)] = obj['bbox']
             color = Object_colors[Object_classes.index(label)]
-            frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
-            frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
+            # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
+            # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
+            print(label)
+        end_time=time.time()-start_time
+        print("Inference time = " + str(end_time))
     else:
         print('Video has ended or failed, try a different video format!')
         break
-    cv2.imshow("Video", frame)
+    # cv2.imshow("Video", frame)
     keyCode = cv2.waitKey(30)
     if keyCode == ord('q'):
         break
