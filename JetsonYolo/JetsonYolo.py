@@ -24,6 +24,7 @@ except:
     vid = cv2.VideoCapture(video_path)
 out = None
 
+print('start objecct deection')
 # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
 while vid.isOpened():
     return_value, frame = vid.read()
