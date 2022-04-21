@@ -1,4 +1,4 @@
-from time import time
+import time
 import cv2
 import numpy as np
 from elements.yolo import OBJ_DETECTION
