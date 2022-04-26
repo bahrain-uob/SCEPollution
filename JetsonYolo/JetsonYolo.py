@@ -51,7 +51,7 @@ while vid.isOpened():
         start_time = time.time()
         detections = Object_detector.detect(frame)
         scores = np.array([d.score for d in detections])
-        boxes = 
+        # boxes = 
         for obj in detections:
             # print(obj)
             label = obj['label']
