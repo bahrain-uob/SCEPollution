@@ -7,3 +7,5 @@ RUN pip3 install PyYaml
 RUN pip3 install matplotlib
 RUN pip3 install opencv-python
 RUN pip3 install scipy
+RUN pip3 install scikit-learn
+CMD ["python3", "/home/JetsonYolo/JetsonYolo.py"]
