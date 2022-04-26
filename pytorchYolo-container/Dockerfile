@@ -6,3 +6,4 @@ RUN pip3 install tqdm
 RUN pip3 install PyYaml
 RUN pip3 install matplotlib
 RUN pip3 install opencv-python
+RUN pip3 install scipy
