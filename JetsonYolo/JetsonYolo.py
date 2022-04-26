@@ -9,6 +9,7 @@ from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
 from application_util import preprocessing
 from application_util import visualization
+from scipy.optimize import linear_sum_assignment as linear_assignment
 
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
                 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
