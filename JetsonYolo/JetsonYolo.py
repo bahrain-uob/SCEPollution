@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from elements.yolo import OBJ_DETECTION
 # deep sort imports
-from deep_sort import preprocessing, nn_matching
+from deep_sort import nn_matching
 from deep_sort.detection import Detection
 from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
