@@ -50,16 +50,30 @@ while vid.isOpened():
         detections = Object_detector.detect(frame)
         print(detections)
         scores = np.array([d['score'] for d in detections])
-        # boxes = 
+        # turn (xmin,ymin), (xmax, ymax) to (x,y,width, height)
+        boxes = [] 
         for obj in detections:
-            # print(obj)
-            label = obj['label']
-            score = obj['score']
             [(xmin,ymin),(xmax,ymax)] = obj['bbox']
-            print(xmin)
-            print(ymin)
-            print(obj['bbox'])
-            color = Object_colors[Object_classes.index(label)]
+            h = ymax - ymin
+            w = xmax - xmin
+            boxes.append((xmin,ymin, w, h))
+        # Start non max supression 
+        indices = preprocessing.non_max_suppression(boxes, nms_max_overlap, scores)
+        detections = np.array([detections[i] for i in indices])       
+        # Call the tracker
+        tracker.predict()
+        tracker.update(detections)
+
+        # update tracks
+        for track in tracker.tracks:
+            if not track.is_confirmed() or track.time_since_update > 1:
+                continue 
+            bbox = track.to_tlbr()
+            class_name = track.get_class()
+            # output tracker information
+            print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
+
+        color = Object_colors[Object_classes.index(label)]
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
             # print(label)
