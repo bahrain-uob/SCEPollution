@@ -8,6 +8,5 @@ RUN pip3 install matplotlib
 RUN pip3 install opencv-python
 RUN pip3 install scipy
 # RUN pip3 install scikit-learn==0.22.1
-RUN apt-get update
-RUN pip3 install tensorflow
+RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
 CMD ["python3", "/home/JetsonYolo/JetsonYolo.py"]
