@@ -49,13 +49,15 @@ while vid.isOpened():
         start_time = time.time()
         detections = Object_detector.detect(frame)
         print(detections)
-        # scores = np.array([d.score for d in detections])
+        scores = np.array([d['score'] for d in detections])
         # boxes = 
         for obj in detections:
             # print(obj)
             label = obj['label']
             score = obj['score']
-            # [(xmin,ymin),(xmax,ymax)] = obj['bbox']
+            [(xmin,ymin),(xmax,ymax)] = obj['bbox']
+            print(xmin)
+            print(ymin)
             print(obj['bbox'])
             color = Object_colors[Object_classes.index(label)]
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
