@@ -21,7 +21,7 @@ Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', '
                 'hair drier', 'toothbrush' ]
 
 Object_colors = list(np.random.rand(80,3)*255)
-Object_detector = OBJ_DETECTION('weights/yolov5s.pt', Object_classes)
+Object_detector = OBJ_DETECTION('/home/JetsonYolo/weights/yolov5s.pt', Object_classes)
 
 # Definition of the parameters
 max_cosine_distance = 0.4
