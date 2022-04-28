@@ -1,13 +1,13 @@
 FROM nvcr.io/nvidia/l4t-pytorch:r32.6.1-pth1.9-py3
 RUN apt-get update -y
 RUN pip3 install pip -U testresources setuptools
-RUN pip3 install pandas
 RUN pip3 install requests
 RUN pip3 install tqdm 
 RUN pip3 install PyYaml
 RUN pip3 install matplotlib
 RUN pip3 install opencv-python
 RUN pip3 install scipy
+RUN pip3 install pandas
 
 # install scipy and associated dependencies
 RUN apt-get install -y libblas3 liblapack3 liblapack-dev libblas-dev
