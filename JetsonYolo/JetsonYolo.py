@@ -57,6 +57,7 @@ while vid.isOpened():
             h = ymax - ymin
             w = xmax - xmin
             boxes.append((xmin,ymin, w, h))
+        boxes = np.array(boxes)
         # Start non max supression 
         indices = preprocessing.non_max_suppression(boxes, nms_max_overlap, scores)
         detections = np.array([detections[i] for i in indices])       
