@@ -6,7 +6,6 @@ from elements.yolo import OBJ_DETECTION
 from deep_sort import nn_matching
 from deep_sort.detection import Detection
 from deep_sort.tracker import Tracker
-from tools import generate_detections as gdet
 from application_util import preprocessing
 from application_util import visualization
 from scipy.optimize import linear_sum_assignment as linear_assignment
