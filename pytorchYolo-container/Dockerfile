@@ -1,6 +1,6 @@
 FROM nvcr.io/nvidia/l4t-pytorch:r32.6.1-pth1.9-py3
 RUN apt-get update -y
-RUN apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
+RUN apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran -y
 RUN pip3 install -U pip3 pip testresources setuptools==49.6.0
 RUN pip3 install requests
 RUN pip3 install tqdm 
