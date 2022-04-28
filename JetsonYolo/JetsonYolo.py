@@ -1,3 +1,4 @@
+from cProfile import label
 import time
 import cv2
 import numpy as np
@@ -30,6 +31,8 @@ nn_budget = None
 nms_max_overlap = 1.0
 # initialize deep sort
 # calculate cosine distance metric
+model_filename = '/home/JetsonYolo/model_data/mars-small128.pb'
+encoder = gdet.create_box_encoder(model_filename, batch_size=1)
 metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
 # initialize tracker
 tracker = Tracker(metric)
@@ -53,6 +56,7 @@ while vid.isOpened():
         scores = np.array([d['score'] for d in detections])
         # turn (xmin,ymin), (xmax, ymax) to (x,y,width, height)
         boxes = [] 
+        labels = []
         for obj in detections:
             [(xmin,ymin),(xmax,ymax)] = obj['bbox']
             h = ymax - ymin
@@ -60,7 +64,14 @@ while vid.isOpened():
             boxes.append((xmin,ymin, w, h))
         boxes = np.array(boxes)
         # Start non max supression 
+        features = encoder(frame, boxes)
+        detections = [Detection(box, score, feature) for box, score,  feature in zip(boxes, scores, features)]
+       # run non-maxima supression
+        boxs = np.array([d.tlwh for d in detections])
+        scores = np.array([d.confidence for d in detections])
+ 
         indices = preprocessing.non_max_suppression(boxes, nms_max_overlap, scores)
+        
         detections = np.array([detections[i] for i in indices])       
         # Call the tracker
         tracker.predict()
