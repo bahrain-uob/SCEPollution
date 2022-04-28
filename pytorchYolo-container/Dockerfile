@@ -8,4 +8,5 @@ RUN pip3 install matplotlib
 RUN pip3 install opencv-python
 RUN pip3 install scipy
 # RUN pip3 install scikit-learn==0.22.1
+RUN pip3 install tensorflow-gpu==1.15
 CMD ["python3", "/home/JetsonYolo/JetsonYolo.py"]
