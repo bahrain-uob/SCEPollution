@@ -34,7 +34,7 @@ metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance
 tracker = Tracker(metric)
 
 # begin video capture
-video_path="./cars.mp4"
+video_path="/home/JetsonYolo/cars.mp4"
 try:
     vid = cv2.VideoCapture(int(video_path))
 except:
