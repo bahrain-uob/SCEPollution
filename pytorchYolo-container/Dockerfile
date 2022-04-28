@@ -25,8 +25,8 @@ RUN apt-get install -y libatlas-base-dev
 RUN pip3 install six==1.15.0
 RUN pip3 install wheel==0.36.2
 RUN pip3 install mock==4.0.3
-RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.4.0/tensorflow-2.4.0-cp37-none-linux_armv7l.whl
-RUN pip3 install tensorflow-2.4.0-cp37-none-linux_armv7l.whl --no-deps
+# RUN wget -q https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.4.0/tensorflow-2.4.0-cp37-none-linux_armv7l.whl
+# RUN pip3 install tensorflow-2.4.0-cp37-none-linux_armv7l.whl --no-deps
 
-# RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
+RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
 CMD ["python3", "/home/JetsonYolo/JetsonYolo.py"]
