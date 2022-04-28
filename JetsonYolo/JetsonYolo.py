@@ -10,6 +10,8 @@ from deep_sort.tracker import Tracker
 from application_util import preprocessing
 from application_util import visualization
 from tools import generate_detections as gdet
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
 from scipy.optimize import linear_sum_assignment as linear_assignment
 
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
@@ -82,7 +84,7 @@ while vid.isOpened():
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue 
             bbox = track.to_tlbr()
-            class_name = track.get_class()
+            # class_name = track.get_class()
             # output tracker information
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
 
