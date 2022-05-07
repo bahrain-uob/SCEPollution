@@ -88,7 +88,8 @@ while vid.isOpened():
             # output tracker information
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
 
-        color = Object_colors[Object_classes.index(label)]
+
+        # color = Object_colors[Object_classes.index(label)]
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
             # print(label)
