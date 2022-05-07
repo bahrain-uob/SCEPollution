@@ -77,10 +77,7 @@ while vid.isOpened():
         detections = np.array([detections[i] for i in indices])       
         # Call the tracker
         tracker.predict()
-        try:
-            tracker.update(detections)
-        except:
-            print("An exception occurred")
+        tracker.update(detections)
 
         # update tracks
         for track in tracker.tracks:
