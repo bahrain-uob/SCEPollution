@@ -76,7 +76,7 @@ class ImageEncoder(object):
                  output_name="features"):
         self.session = tf.compat.v1.Session()
         with tf.io.gfile.GFile(checkpoint_filename, "rb") as file_handle:
-            graph_def = tf.GraphDef()
+            graph_def = tf.compat.v1.GraphDef()
             graph_def.ParseFromString(file_handle.read())
         tf.import_graph_def(graph_def, name="net")
         self.input_var = tf.get_default_graph().get_tensor_by_name(
