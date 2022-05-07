@@ -80,6 +80,7 @@ while vid.isOpened():
         tracker.update(detections)
 
         # update tracks
+        count=0
         for track in tracker.tracks:
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue 
@@ -87,7 +88,9 @@ while vid.isOpened():
             # class_name = track.get_class()
             # output tracker information
             # print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
-            print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), detections[0], (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
+            className = detections.get('label')
+            print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), detections[count]['label'], (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
+            count=count+1
 
 
 
