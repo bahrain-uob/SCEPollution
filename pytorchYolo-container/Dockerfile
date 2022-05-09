@@ -13,5 +13,5 @@ RUN pip3 install -U --no-deps future==0.18.2 mock==3.0.5 keras_preprocessing==1.
 RUN apt-get install pkg-config -y
 RUN env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
 RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
-RUN pip3 install PyQt5
+RUN apt-get install python3-pyqt5
 CMD ["python3", "/home/JetsonYolo/JetsonYolo.py"]
