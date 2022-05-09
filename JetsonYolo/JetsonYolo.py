@@ -64,6 +64,7 @@ while vid.isOpened():
             h = ymax - ymin
             w = xmax - xmin
             boxes.append((xmin,ymin, w, h))
+            labels.append(obj['label'])
         boxes = np.array(boxes)
         # Start non max supression 
         features = encoder(frame, boxes)
