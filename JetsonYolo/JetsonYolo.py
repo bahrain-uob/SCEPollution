@@ -1,4 +1,3 @@
-from cProfile import label
 import time
 import cv2
 import numpy as np
@@ -13,6 +12,8 @@ from tools import generate_detections as gdet
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 from scipy.optimize import linear_sum_assignment as linear_assignment
+
+#initialize color map
 
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
                 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
@@ -56,8 +57,7 @@ while vid.isOpened():
     if return_value:
         start_time = time.time()
         detections = Object_detector.detect(frame)
-        # scores = np.array([d['score'] for d in detections])
-        # turn (xmin,ymin), (xmax, ymax) to (x,y,width, height)
+
         boxes = [] 
         labels = []
         scores = []
@@ -93,7 +93,6 @@ while vid.isOpened():
         busses = 0
         print('Objects being tracked: {}'.format(str(len(tracker.tracks))))        
         for track in tracker.tracks:
-            print("Track: {}".format(track))
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue 
             bbox = track.to_tlbr()
@@ -106,22 +105,22 @@ while vid.isOpened():
                 busses += 1
             # output tracker information
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
+            # visualize 
+            color = Object_colors[int(track.track_id) % len(Object_colors)]
+            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
+            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
+            cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
+        
         print('At the current frame: {} cars, {} busses, {} trucks'.format(cars, busses, trucks))
-
-        # color = Object_colors[Object_classes.index(label)]
+        cv2.imshow("output", frame)
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
-            # print(label)
-        # end_time=time.time()-start_time
-        # print("Inference time = " + str(end_time))
         fps = 1.0 / (time.time() - start_time)
         print("FPS: %.2f" % fps)
+        if cv2.waitKey(1) & 0xFF == ord('q'): break
     else:
         print('Video has ended or failed, try a different video format!')
         break
-    # cv2.imshow("Video", frame)
-    keyCode = cv2.waitKey(30)
-    if keyCode == ord('q'):
-        break
 vid.release()
 cv2.destroyAllWindows()
+
