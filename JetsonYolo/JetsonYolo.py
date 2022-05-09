@@ -48,51 +48,65 @@ except:
 out = None
 
 print('start object detection')
+allowed_classes = ['car', 'motorbike', 'bus', 'truck']
+
 # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
 while vid.isOpened():
     return_value, frame = vid.read()
     if return_value:
         start_time = time.time()
         detections = Object_detector.detect(frame)
-        # print(detections)
-        scores = np.array([d['score'] for d in detections])
+        # scores = np.array([d['score'] for d in detections])
         # turn (xmin,ymin), (xmax, ymax) to (x,y,width, height)
         boxes = [] 
         labels = []
+        scores = []
+
         for obj in detections:
-            [(xmin,ymin),(xmax,ymax)] = obj['bbox']
-            h = ymax - ymin
-            w = xmax - xmin
-            boxes.append((xmin,ymin, w, h))
-            labels.append(obj['label'])
+            if obj['label'] in allowed_classes:
+                [(xmin,ymin),(xmax,ymax)] = obj['bbox']
+                h = ymax - ymin
+                w = xmax - xmin
+                boxes.append((xmin,ymin, w, h))
+                labels.append(obj['label'])
+                scores.append(obj['score'])
+
         boxes = np.array(boxes)
         labels = np.array(labels)
-        
+        scores = np.array(scores)
+
         # Start non max supression 
         features = encoder(frame, boxes)
         detections = [Detection(box, score, label, feature) for box, score, label, feature in zip(boxes, scores, labels, features)]
         boxs = np.array([d.tlwh for d in detections])
         scores = np.array([d.confidence for d in detections])
-        # classes = np.array([d.class_name for d in detections])
        # run non-maxima supression
         indices = preprocessing.non_max_suppression(boxes, nms_max_overlap, scores)
-        
         detections = np.array([detections[i] for i in indices])       
         # Call the tracker
         tracker.predict()
         tracker.update(detections)
 
         # update tracks
-        print("updating track")
+        cars = 0
+        trucks = 0
+        busses = 0
+        print('Objects being tracked: {}'.format(str(len(tracker.tracks))))        
         for track in tracker.tracks:
             print("Track: {}".format(track))
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue 
             bbox = track.to_tlbr()
             class_name = track.get_class()
+            if class_name == 'car':
+                cars += 1
+            elif class_name == 'truck':
+                trucks += 1
+            elif class_name == 'bus':
+                busses += 1
             # output tracker information
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
-
+        print('At the current frame: {} cars, {} busses, {} trucks'.format(cars, busses, trucks))
 
         # color = Object_colors[Object_classes.index(label)]
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
