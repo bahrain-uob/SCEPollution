@@ -67,6 +67,7 @@ while vid.isOpened():
             labels.append(obj['label'])
         boxes = np.array(boxes)
         labels = np.array(labels)
+        
         # Start non max supression 
         features = encoder(frame, boxes)
         detections = [Detection(box, score, label, feature) for box, score, label, feature in zip(boxes, scores, labels, features)]
