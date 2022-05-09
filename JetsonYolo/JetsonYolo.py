@@ -54,7 +54,7 @@ while vid.isOpened():
     if return_value:
         start_time = time.time()
         detections = Object_detector.detect(frame)
-        print(detections)
+        # print(detections)
         scores = np.array([d['score'] for d in detections])
         # turn (xmin,ymin), (xmax, ymax) to (x,y,width, height)
         boxes = [] 
@@ -80,7 +80,9 @@ while vid.isOpened():
         tracker.update(detections)
 
         # update tracks
+        print("updating track")
         for track in tracker.tracks:
+            print("Track: {}".format(track))
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue 
             bbox = track.to_tlbr()
