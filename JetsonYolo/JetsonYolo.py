@@ -66,12 +66,13 @@ while vid.isOpened():
             boxes.append((xmin,ymin, w, h))
             labels.append(obj['label'])
         boxes = np.array(boxes)
+        labels = np.array(labels)
         # Start non max supression 
         features = encoder(frame, boxes)
         detections = [Detection(box, score, label, feature) for box, score, label, feature in zip(boxes, scores, labels, features)]
         boxs = np.array([d.tlwh for d in detections])
         scores = np.array([d.confidence for d in detections])
-        classes = np.array([d.class_name for d in detections])
+        # classes = np.array([d.class_name for d in detections])
        # run non-maxima supression
         indices = preprocessing.non_max_suppression(boxes, nms_max_overlap, scores)
         
