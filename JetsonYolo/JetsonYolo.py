@@ -51,10 +51,14 @@ out = None
 print('start object detection')
 allowed_classes = ['car', 'motorbike', 'bus', 'truck']
 
+frameCounter = 0
 # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
+print('Current time: ')
+total_start_time = time.time()
 while vid.isOpened():
     return_value, frame = vid.read()
     if return_value:
+        frameCounter += 1
         start_time = time.time()
         detections = Object_detector.detect(frame)
 
@@ -118,9 +122,19 @@ while vid.isOpened():
         fps = 1.0 / (time.time() - start_time)
         print("FPS: %.2f" % fps)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
-    else:
-        print('Video has ended or failed, try a different video format!')
+    # timing in seconds 
+    elif time.time() - total_start_time > 60: 
+        current = time.time()
+        # Duration in minutes 
+        diff = (current - total_start_time) / 60
+        fps_average = frameCounter / current - total_start_time
+        print('FPS average for {} min = {} fps'.format(str(diff), str(fps_average)))
         break
+    else:
+        print('Restarting the video')
+        # break
+        vid = cv2.VideoCapture(int(video_path))
+
 vid.release()
 cv2.destroyAllWindows()
 
