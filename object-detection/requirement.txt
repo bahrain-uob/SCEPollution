@@ -1,0 +1,6 @@
+tensorflow
+pycocotools
+tensorflow_hub
+matplotlib
+numpy
+Pillow
