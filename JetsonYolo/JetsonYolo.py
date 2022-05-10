@@ -63,7 +63,7 @@ while vid.isOpened():
         scores = []
 
         for obj in detections:
-            if obj['label'] in allowed_classes:
+            if obj['label'] in allowed_classes and obj['score']>0.5:
                 [(xmin,ymin),(xmax,ymax)] = obj['bbox']
                 h = ymax - ymin
                 w = xmax - xmin
