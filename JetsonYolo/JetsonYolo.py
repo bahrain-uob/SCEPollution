@@ -23,7 +23,7 @@ Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', '
                 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
                 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone',
                 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear',
-                'hair drier', 'toothbrush' ]
+                'hair drier', 'toothbrush']
 
 Object_colors = list(np.random.rand(80,3)*255)
 Object_detector = OBJ_DETECTION('/home/JetsonYolo/weights/yolov5s.pt', Object_classes)
