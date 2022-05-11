@@ -127,7 +127,7 @@ while vid.isOpened():
         print("FPS: %.2f" % fps)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     # timing in seconds 
-    elif time.time() - total_start_time  > 180: 
+    elif time.time() - total_start_time  > 120: 
         current = time.time()
         # Duration in minutes 
         diff = (current - total_start_time) / 60
