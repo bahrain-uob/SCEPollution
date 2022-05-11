@@ -59,7 +59,7 @@ while vid.isOpened():
     return_value, frame = vid.read()
     if return_value:
         start_time = time.time()
-        fpsCounter =+ 1
+        fpsCounter += 1
         detections = Object_detector.detect(frame)
         
         boxes = [] 
