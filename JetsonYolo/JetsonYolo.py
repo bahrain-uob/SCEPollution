@@ -51,17 +51,17 @@ out = None
 print('start object detection')
 allowed_classes = ['car', 'motorbike', 'bus', 'truck']
 
-frameCounter = 0
-# To flip the image, modify the flip_method parameter (0 and 2 are the most common)
-print('Current time: ')
+fpsCounter = 0
+fpsSum = 0
 total_start_time = time.time()
+# To flip the image, modify the flip_method parameter (0 and 2 are the most common)
 while vid.isOpened():
     return_value, frame = vid.read()
     if return_value:
-        frameCounter += 1
         start_time = time.time()
+        fpsCounter =+ 1
         detections = Object_detector.detect(frame)
-
+        
         boxes = [] 
         labels = []
         scores = []
@@ -120,14 +120,15 @@ while vid.isOpened():
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
         fps = 1.0 / (time.time() - start_time)
+        fpsSum =+ fps
         print("FPS: %.2f" % fps)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     # timing in seconds 
-    elif time.time() - total_start_time > 60: 
+    elif time.time() - total_start_time  > 180: 
         current = time.time()
         # Duration in minutes 
         diff = (current - total_start_time) / 60
-        fps_average = frameCounter / current - total_start_time
+        fps_average = fpsSum / fpsCounter
         print('FPS average for {} min = {} fps'.format(str(diff), str(fps_average)))
         break
     else:
