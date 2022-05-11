@@ -61,7 +61,7 @@ total_start_time = 0
 start = True
 wait_frame_count = {}
 WarmUpCount = 0 
-fps = vid.get(cv2.CV_CAP_PROP_FPS)
+fps = vid.get(cv2.CAP_PROP_FPS)
 
 # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
 while vid.isOpened():
