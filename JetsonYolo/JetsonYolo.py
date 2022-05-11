@@ -147,11 +147,19 @@ while vid.isOpened():
         diff = (current - total_start_time) / 60
         fps_average = fpsSum / fpsCounter
         print('FPS average for {} min = {} fps'.format(str(diff), str(fps_average)))
+        
         print(wait_frame_count)
         wait_time_count = {}
-        for k in wait_frame_count:
-            wait_time_count[k] = wait_frame_count[k] / fps_average
+        for k in wait_frame_count:                
+            waittime = wait_frame_count[k] / fps_average
+            if waittime > 10:
+                wait_time_count[k]  = waittime
         print(wait_time_count)
+        
+
+        # average wait time
+        average_wait_time = sum(wait_time_count.values()) / len(wait_time_count)
+        print('The average wait time is: {}'.format(str(average_wait_time)))
         break
     else:
         print('Restarting the video')
