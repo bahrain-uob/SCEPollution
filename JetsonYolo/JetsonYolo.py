@@ -55,6 +55,7 @@ fpsCounter = 0
 fpsSum = 0
 total_start_time = 0
 start = True
+wait_frame_count = {}
 # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
 while vid.isOpened():
     return_value, frame = vid.read()
@@ -110,6 +111,15 @@ while vid.isOpened():
                 trucks += 1
             elif class_name == 'bus':
                 busses += 1
+
+            #counting frames for each track
+            trackID=str(track.track_id)
+            if trackID in wait_frame_count.keys():
+                wait_frame_count[trackID] += 1   
+            else:
+                wait_frame_count[trackID] = 1
+            
+
             # output tracker information
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
             # visualize 
@@ -127,12 +137,13 @@ while vid.isOpened():
         print("FPS: %.2f" % fps)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     # timing in seconds 
-    elif time.time() - total_start_time  > 300: 
+    elif time.time() - total_start_time  > 60: 
         current = time.time()
         # Duration in minutes 
         diff = (current - total_start_time) / 60
         fps_average = fpsSum / fpsCounter
         print('FPS average for {} min = {} fps'.format(str(diff), str(fps_average)))
+        print(wait_frame_count)
         break
     else:
         print('Restarting the video')
