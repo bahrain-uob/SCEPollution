@@ -120,7 +120,7 @@ while vid.isOpened():
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
         fps = 1.0 / (time.time() - start_time)
-        fpsSum =+ fps
+        fpsSum += fps
         print("FPS: %.2f" % fps)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     # timing in seconds 
