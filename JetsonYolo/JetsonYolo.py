@@ -14,7 +14,11 @@ from tensorflow.compat.v1 import InteractiveSession
 from scipy.optimize import linear_sum_assignment as linear_assignment
 
 #initialize color map
-
+def getSumFrame(FrameCountDict):
+    sum = 0
+    for obj in FrameCountDict:
+        sum += FrameCountDict[obj]
+    return sum
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
                 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
                 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
@@ -124,12 +128,12 @@ while vid.isOpened():
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
             # visualize 
             color = Object_colors[int(track.track_id) % len(Object_colors)]
-            # cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
-            # cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
-            # cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
+            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
+            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
+            cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
         
         print('At the current frame: {} cars, {} busses, {} trucks'.format(cars, busses, trucks))
-        # cv2.imshow("output", frame)
+        cv2.imshow("output", frame)
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
         fps = 1.0 / (time.time() - start_time)
@@ -144,6 +148,10 @@ while vid.isOpened():
         fps_average = fpsSum / fpsCounter
         print('FPS average for {} min = {} fps'.format(str(diff), str(fps_average)))
         print(wait_frame_count)
+        wait_time_count = {}
+        for k in wait_frame_count:
+            wait_time_count[k] = wait_frame_count[k] / fps_average
+        print(wait_time_count)
         break
     else:
         print('Restarting the video')
