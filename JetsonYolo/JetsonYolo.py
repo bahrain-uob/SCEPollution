@@ -134,7 +134,7 @@ while vid.isOpened():
     else:
         print('Restarting the video')
         # break
-        vid = cv2.VideoCapture(int(video_path))
+        vid = cv2.VideoCapture(video_path)
 
 vid.release()
 cv2.destroyAllWindows()
