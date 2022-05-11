@@ -61,6 +61,8 @@ total_start_time = 0
 start = True
 wait_frame_count = {}
 WarmUpCount = 0 
+fps = vid.get(cv2.cv.CV_CAP_PROP_FPS)
+
 # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
 while vid.isOpened():
     return_value, frame = vid.read()
@@ -156,7 +158,7 @@ while vid.isOpened():
         wait_time_count = {}
         for k in wait_frame_count:                
             waittime = wait_frame_count[k] / 29.73
-            if waittime > 10:
+            if waittime > 0:
                 wait_time_count[k]  = waittime
         print(wait_time_count)
         
@@ -164,6 +166,7 @@ while vid.isOpened():
         # average wait time
         average_wait_time = sum(wait_time_count.values()) / len(wait_time_count)
         print('The average wait time is: {}'.format(str(average_wait_time)))
+        print(f"fps: {fps}")
         break
     else:
         print('Restarting the video')
