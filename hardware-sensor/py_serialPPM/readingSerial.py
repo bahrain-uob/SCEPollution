@@ -3,7 +3,7 @@ import serial
 import time
 
 # Set arduino serial COM3
-arduino = serial.Serial(port='COM3', baudrate=115200, timeout=.1)
+arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
 # Function to read from the arduino
 def write_read():
@@ -97,7 +97,6 @@ while True:
             stop = time.time()
             count = count + 1
         else:
-
             # if the time reached the period, get the avarage and update start-time and end-time
             avg = sum / count
             start = time.time()
@@ -112,7 +111,6 @@ while True:
             sum = 0.0
             count = 0
     else:
-
         # Update end-time to skip the Zero values
         stop = time.time()
 

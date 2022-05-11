@@ -1,6 +1,7 @@
 import time
 import cv2
 import numpy as np
+import serial
 from elements.yolo import OBJ_DETECTION
 # deep sort imports
 from deep_sort import nn_matching
@@ -13,12 +14,59 @@ from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 from scipy.optimize import linear_sum_assignment as linear_assignment
 
-#initialize color map
-def getSumFrame(FrameCountDict):
-    sum = 0
-    for obj in FrameCountDict:
-        sum += FrameCountDict[obj]
-    return sum
+#SESNOR AND ARDUINO
+
+# Set arduino serial COM3
+arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
+
+# Function to read from the arduino
+def write_read():
+    data = arduino.readline()
+    return data
+
+# AQI Function to calculate the Air Quality
+def gen_aqi(co):
+    if co<=4.4:
+        Ih=50
+        Il=0
+        BPh=4.4
+        BPl=0
+    elif co<=9.4:
+        Ih=100
+        Il=51
+        BPh=9.4
+        BPl=4.5
+    elif co<=12.4:
+        Ih=150
+        Il=101
+        BPh=12.4
+        BPl=9.5
+    elif co<=15.4:
+        Ih=200
+        Il=151
+        BPh=15.4
+        BPl=12.5
+    elif co<=30.4:
+        Ih=300
+        Il=201
+        BPh=30.4
+        BPl=15.5
+    elif co<=40.4:
+        Ih=400
+        Il=301
+        BPh=40.4
+        BPl=30.5
+    else:
+        Ih=500
+        Il=401
+        BPh=50.4
+        BPl=40.5
+    aqi=int(((Ih-Il)/(BPh-BPl))*(co-BPl)+Il)
+    return aqi
+
+
+#OBJECT TRACKING AND DETECTION
+
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
                 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
                 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
@@ -162,7 +210,6 @@ while vid.isOpened():
                 wait_time_count[k]  = waittime
         print(wait_time_count)
         
-
         # average wait time
         average_wait_time = sum(wait_time_count.values()) / len(wait_time_count)
         print('The average wait time is: {}'.format(str(average_wait_time)))

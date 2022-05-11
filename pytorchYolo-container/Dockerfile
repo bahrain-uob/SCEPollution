@@ -14,4 +14,5 @@ RUN apt-get install pkg-config -y
 RUN env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
 RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
 RUN apt-get install python3-pyqt5 -y
+RUN pip3 install pyserial
 CMD ["python3", "/home/JetsonYolo/JetsonYolo.py"]
