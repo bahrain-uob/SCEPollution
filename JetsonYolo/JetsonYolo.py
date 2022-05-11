@@ -60,6 +60,7 @@ fpsSum = 0
 total_start_time = 0
 start = True
 wait_frame_count = {}
+WarmUpCount = 0 
 # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
 while vid.isOpened():
     return_value, frame = vid.read()
@@ -67,6 +68,9 @@ while vid.isOpened():
         start_time = time.time()
         fpsCounter += 1
         detections = Object_detector.detect(frame)
+        if WarmUpCount < 6:
+            WarmUpCount += 1 
+            continue
         if start:
             total_start_time = time.time() 
             start = False
