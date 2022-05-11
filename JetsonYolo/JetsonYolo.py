@@ -114,12 +114,12 @@ while vid.isOpened():
             print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
             # visualize 
             color = Object_colors[int(track.track_id) % len(Object_colors)]
-            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
-            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
-            cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
+            # cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
+            # cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
+            # cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
         
         print('At the current frame: {} cars, {} busses, {} trucks'.format(cars, busses, trucks))
-        cv2.imshow("output", frame)
+        # cv2.imshow("output", frame)
             # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
             # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
         fps = 1.0 / (time.time() - start_time)
@@ -127,7 +127,7 @@ while vid.isOpened():
         print("FPS: %.2f" % fps)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     # timing in seconds 
-    elif time.time() - total_start_time  > 120: 
+    elif time.time() - total_start_time  > 300: 
         current = time.time()
         # Duration in minutes 
         diff = (current - total_start_time) / 60
