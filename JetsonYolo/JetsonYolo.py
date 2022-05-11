@@ -155,7 +155,7 @@ while vid.isOpened():
         print(wait_frame_count)
         wait_time_count = {}
         for k in wait_frame_count:                
-            waittime = wait_frame_count[k] / fps_average
+            waittime = wait_frame_count[k] / 29.73
             if waittime > 10:
                 wait_time_count[k]  = waittime
         print(wait_time_count)
