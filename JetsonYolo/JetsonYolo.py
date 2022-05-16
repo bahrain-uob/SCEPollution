@@ -19,7 +19,7 @@ from scipy.optimize import linear_sum_assignment as linear_assignment
 # Set arduino serial COM3
 arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
-# Function to read from the arduino
+# Function to read from the a2rduino
 def write_read():
     data = arduino.readline()
     return data
@@ -128,7 +128,7 @@ while vid.isOpened():
         scores = []
 
         for obj in detections:
-            if obj['label'] in allowed_classes and obj['score']>0.5:
+            if obj['label'] in allowed_classes and obj['score'] > 0.5:
                 [(xmin,ymin),(xmax,ymax)] = obj['bbox']
                 h = ymax - ymin
                 w = xmax - xmin
