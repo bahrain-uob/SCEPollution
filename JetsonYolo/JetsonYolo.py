@@ -122,7 +122,6 @@ wait_frame_count = {}
 WarmUpCount = 0 
 fpscv2 = vid.get(cv2.CAP_PROP_FPS)
 
-
 # start forever loop 
 while True:
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
@@ -239,7 +238,7 @@ while True:
         cars = 0
         start = True
         total_start_time = 0
-    else:
+    elif not vid.isOpened():
         print('Restarting the video')
         vid = cv2.VideoCapture(video_path)
     vid.release()
