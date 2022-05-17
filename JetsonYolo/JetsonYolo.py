@@ -75,7 +75,12 @@ myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 myAWSIoTMQTTClient.connect()
 time.sleep(2)
 
-
+def getCountType(dictCounts, type):
+    count = 0
+    for k in dictCounts:
+        if k['class'] == type:
+            count += 1
+    return count
 
 # OBJECT TRACKING AND DETECTION
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
@@ -180,19 +185,27 @@ while True:
                     continue 
                 bbox = track.to_tlbr()
                 class_name = track.get_class()
-                if class_name == 'car':
-                    cars += 1
-                elif class_name == 'truck':
-                    trucks += 1
-                elif class_name == 'bus':
-                    busses += 1
+                # if class_name == 'car':
+                #     cars += 1
+                # elif class_name == 'truck':
+                #     trucks += 1
+                # elif class_name == 'bus':
+                #     busses += 1
 
                 #counting frames for each track
+                # k = {
+                #     "0": {
+                #         "count": number of frames object x appeared
+                #         "class": car\truck\bus
+                #     }
+                # }
                 trackID=str(track.track_id)
                 if trackID in wait_frame_count.keys():
-                    wait_frame_count[trackID] += 1   
+                    wait_frame_count[trackID]['count'] += 1  
                 else:
-                    wait_frame_count[trackID] = 1
+                    wait_frame_count[trackID]['count'] = 1
+                    wait_frame_count[trackID]['class'] = class_name 
+
                 
                 # output tracker information
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
@@ -229,9 +242,9 @@ while True:
             message = {} 
             message['fps'] = fpscv2
             message['waittime'] = average_wait_time
-            message['busses'] = busses
-            message['cars'] = cars
-            message['trucks'] = trucks
+            message['busses'] = getCountType(wait_frame_count, 'bus')
+            message['cars'] = getCountType(wait_frame_count, 'car')
+            message['trucks'] =  getCountType(wait_frame_count, 'truck')
             # cityType 
             # city 
             messageJson = json.dumps(message)
@@ -245,6 +258,7 @@ while True:
             cars = 0
             start = True
             total_start_time = 0
+            wait_frame_count = {}
             k = time.time() - total_start_time  > 60
             print('boolean status')
             print(k)
