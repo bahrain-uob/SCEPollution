@@ -94,57 +94,6 @@ myAWSIoTMQTTClient.connect()
 
 
 
-#SESNOR AND ARDUINO
-
-# Set arduino serial COM3
-# arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
-
-# Function to read from the arduino
-# def write_read():
-#     data = arduino.readline()
-#     return data
-
-# AQI Function to calculate the Air Quality
-# def gen_aqi(co):
-#     if co<=4.4:
-#         Ih=50
-#         Il=0
-#         BPh=4.4
-#         BPl=0
-#     elif co<=9.4:
-#         Ih=100
-#         Il=51
-#         BPh=9.4
-#         BPl=4.5
-#     elif co<=12.4:
-#         Ih=150
-#         Il=101
-#         BPh=12.4
-#         BPl=9.5
-#     elif co<=15.4:
-#         Ih=200
-#         Il=151
-#         BPh=15.4
-#         BPl=12.5
-#     elif co<=30.4:
-#         Ih=300
-#         Il=201
-#         BPh=30.4
-#         BPl=15.5
-#     elif co<=40.4:
-#         Ih=400
-#         Il=301
-#         BPh=40.4
-#         BPl=30.5
-#     else:
-#         Ih=500
-#         Il=401
-#         BPh=50.4
-#         BPl=40.5
-#     aqi=int(((Ih-Il)/(BPh-BPl))*(co-BPl)+Il)
-#     return aqi
-
-
 #OBJECT TRACKING AND DETECTION
 
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',

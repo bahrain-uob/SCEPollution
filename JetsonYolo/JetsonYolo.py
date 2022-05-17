@@ -17,7 +17,7 @@ from scipy.optimize import linear_sum_assignment as linear_assignment
 #SESNOR AND ARDUINO
 
 # Set arduino serial COM3
-arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
+# arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
 
 # Function to read from the a2rduino
 def write_read():
