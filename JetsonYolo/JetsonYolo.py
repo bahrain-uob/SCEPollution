@@ -170,10 +170,10 @@ while True:
             tracker.predict()
             tracker.update(detections)
 
-            # update tracks
-            cars = 0
-            trucks = 0
-            busses = 0
+            # # update tracks
+            # cars = 0
+            # trucks = 0
+            # busses = 0
             print('Objects being tracked: {}'.format(str(len(tracker.tracks))))        
             for track in tracker.tracks:
                 if not track.is_confirmed() or track.time_since_update > 1:
