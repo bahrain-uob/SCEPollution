@@ -44,6 +44,8 @@ certificatePath = args.certificatePath
 privateKeyPath = args.privateKeyPath
 port = 8883
 visualize = args.visualize
+print('visualization')
+print(visualize)
 # useWebsocket = args.useWebsocket
 clientId = args.clientId
 topic = args.topic
