@@ -212,7 +212,7 @@ while True:
             print("FPS: %.2f" % fps)
             if cv2.waitKey(1) & 0xFF == ord('q'): break
         # timing in seconds 
-        elif time.time() - total_start_time  > 60: 
+        elif time.time() - total_start_time  > 60 and not start: 
             current = time.time()
             print(wait_frame_count)
             wait_time_count = {}
