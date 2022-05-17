@@ -237,6 +237,7 @@ while True:
             messageJson = json.dumps(message)
             myAWSIoTMQTTClient.publish(topic, messageJson, 1)
             print('Published to IoT, DELAY 5 seconds')
+            print
             time.sleep(5)
             # reset values 
             busses = 0
@@ -244,7 +245,10 @@ while True:
             cars = 0
             start = True
             total_start_time = 0
-            vid = cv2.VideoCapture(video_path)
+            k = time.time() - total_start_time  > 60
+            print('boolean status')
+            print(k)
+            # vid = cv2.VideoCapture(video_path)
         else:
             print('Restarting the video')
             vid = cv2.VideoCapture(video_path)
