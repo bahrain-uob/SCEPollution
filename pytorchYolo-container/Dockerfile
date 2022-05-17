@@ -16,9 +16,6 @@ RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/c
 RUN apt-get install python3-pyqt5 -y
 RUN pip3 install pyserial
 RUN echo $pwd 
-RUN cd /home
-RUN echo $pwd
+RUN cd /homE
 RUN ls
-RUN ls /home
-RUN ls /home/cert
-CMD ["python3", "/home/JetsonYolo/JetsonYolo.py", "-e a1ou9k4w6oo45b-ats.iot.us-east-1.amazonaws.com",  "-r /home/cert/root-CA.crt",  "-c /home/cert/StreetNode.cert.pem", "-k /home/cert/StreetNode.private.key"]
+CMD ["python3", "/home/JetsonYolo/JetsonYolo.py", "-e a1ou9k4w6oo45b-ats.iot.us-east-1.amazonaws.com",  "-r /homE/cert/root-CA.crt",  "-c /homE/cert/StreetNode.cert.pem", "-k /homE/cert/StreetNode.private.key"]

@@ -85,7 +85,7 @@ Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', '
                 'hair drier', 'toothbrush']
 
 Object_colors = list(np.random.rand(80,3)*255)
-Object_detector = OBJ_DETECTION('/home/JetsonYolo/weights/yolov5s.pt', Object_classes)
+Object_detector = OBJ_DETECTION('/homE/JetsonYolo/weights/yolov5s.pt', Object_classes)
 
 # Definition of the parameters
 max_cosine_distance = 0.4
@@ -93,14 +93,14 @@ nn_budget = None
 nms_max_overlap = 1.0
 # initialize deep sort
 # calculate cosine distance metric
-model_filename = '/home/JetsonYolo/model_data/mars-small128.pb'
+model_filename = '/homE/JetsonYolo/model_data/mars-small128.pb'
 encoder = gdet.create_box_encoder(model_filename, batch_size=1)
 metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
 # initialize tracker
 tracker = Tracker(metric)
 
 # begin video capture
-video_path="/home/JetsonYolo/cars.mp4"
+video_path="/homE/JetsonYolo/cars.mp4"
 try:
     vid = cv2.VideoCapture(int(video_path))
 except:
