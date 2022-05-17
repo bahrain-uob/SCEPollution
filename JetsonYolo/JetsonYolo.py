@@ -35,13 +35,15 @@ parser.add_argument("-t", "--topic", action="store", dest="topic", default="sdk/
 
 parser.add_argument("-M", "--message", action="store", dest="message", default="Hello World!",
                     help="Message to publish")
-
+parser.add_argument("-v", "--visualize", action="store", dest="visualize", type=bool, default=True,
+                    help="Visualize results")
 args = parser.parse_args()
 host = args.host
 rootCAPath = args.rootCAPath
 certificatePath = args.certificatePath
 privateKeyPath = args.privateKeyPath
 port = 8883
+visualize = args.visualize
 # useWebsocket = args.useWebsocket
 clientId = args.clientId
 topic = args.topic
@@ -191,14 +193,14 @@ while True:
                     print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
                     # visualize 
                     color = Object_colors[int(track.track_id) % len(Object_colors)]
-                    cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
-                    cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
-                    cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
+                    if visualize:
+                        cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
+                        cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
+                        cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
                 
                 print('At the current frame: {} cars, {} busses, {} trucks'.format(cars, busses, trucks))
-                cv2.imshow("output", frame)
-                    # frame = cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), color, 2) 
-                    # frame = cv2.putText(frame, f'{label} ({str(score)})', (xmin,ymin), cv2.FONT_HERSHEY_SIMPLEX , 0.75, color, 1, cv2.LINE_AA)
+                if visualize:
+                    cv2.imshow("output", frame)
                 fps = 1.0 / (time.time() - start_time)
                 fpsSum += fps
                 fpsCounter += 1
@@ -215,7 +217,7 @@ while True:
                 wait_time_count = {}
                 for k in wait_frame_count:                
                     waittime = wait_frame_count[k] / fpscv2
-                    if waittime > 10:
+                    if waittime > 0:
                         wait_time_count[k]  = waittime
                 print(wait_time_count)
                 # average wait time
