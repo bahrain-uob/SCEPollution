@@ -90,6 +90,9 @@ Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', '
 
 Object_colors = list(np.random.rand(80,3)*255)
 Object_detector = OBJ_DETECTION('/home/JetsonYolo/weights/yolov5s.pt', Object_classes)
+cars = 0
+trucks = 0
+busses = 0
 
 # Definition of the parameters
 max_cosine_distance = 0.4
@@ -171,9 +174,6 @@ while True:
             tracker.update(detections)
 
             # # update tracks
-            # cars = 0
-            # trucks = 0
-            # busses = 0
             print('Objects being tracked: {}'.format(str(len(tracker.tracks))))        
             for track in tracker.tracks:
                 if not track.is_confirmed() or track.time_since_update > 1:
