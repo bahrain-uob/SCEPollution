@@ -35,7 +35,7 @@ parser.add_argument("-t", "--topic", action="store", dest="topic", default="sdk/
 
 parser.add_argument("-M", "--message", action="store", dest="message", default="Hello World!",
                     help="Message to publish")
-parser.add_argument("-v", "--visualize", action="store", dest="visualize", type=bool, default=True,
+parser.add_argument("-v", "--visualize", action="store_false", dest="visualize",
                     help="Visualize results")
 args = parser.parse_args()
 host = args.host
@@ -240,6 +240,7 @@ while True:
                 trucks = 0
                 cars = 0
                 start = True
+                total_start_time = 0
                 continue
             else:
                 print('Restarting the video')
