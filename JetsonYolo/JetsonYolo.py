@@ -65,6 +65,8 @@ def gen_aqi(co):
     return aqi
 
 
+
+
 #OBJECT TRACKING AND DETECTION
 
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',

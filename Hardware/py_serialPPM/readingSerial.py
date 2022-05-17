@@ -63,6 +63,7 @@ AQI = ''
 while True:
     # Save the arduino read value and convert from Byte to String
     value = write_read().decode('UTF-8')
+    print(value)
     # if the value null consider it as Zero
     if value == '':
         value = "0"
@@ -90,7 +91,7 @@ while True:
     if Zeros == False:
 
         # Checking if the time didn't reached the defined period
-        if (stop - start) < 3600:
+        if (stop - start) < 20:
 
             # Get the sum, update the end-time, increament the count
             sum = sum + valuenum
