@@ -3,11 +3,12 @@ import serial
 import time
 
 # Set arduino serial COM3
-arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=.1)
+arduino = serial.Serial(port='COM3', baudrate=115200, timeout=.1)
 
 # Function to read from the arduino
 def write_read():
     data = arduino.readline()
+    # print(data)
     return data
 
 # AQI Function to calculate the Air Quality
