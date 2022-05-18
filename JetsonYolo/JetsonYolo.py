@@ -18,6 +18,15 @@ from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
 import argparse
 import json
+# CO Imports
+from readingSerial1 import COreader 
+import threading 
+
+# Init thread
+# coreader_object = COreader(arduino_port='COM3') 
+# t = threading.Thread(target=coreader_object.main, daemon= True)
+# t.start() 
+
 
 
 # Read in command-line parameters
@@ -78,7 +87,7 @@ time.sleep(2)
 def getCountType(dictCounts, type):
     count = 0
     for k in dictCounts:
-        if k['class'] == type:
+        if dictCounts[k]['class'] == type:
             count += 1
     return count
 
