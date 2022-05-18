@@ -23,9 +23,9 @@ from readingSerial1 import COreader
 import threading 
 
 # Init thread
-# coreader_object = COreader(arduino_port='COM3') 
-# t = threading.Thread(target=coreader_object.main, daemon= True)
-# t.start() 
+coreader_object = COreader(arduino_port='/dev/ttyACM0') 
+t = threading.Thread(target=coreader_object.main, daemon= True)
+t.start() 
 
 
 
@@ -244,6 +244,10 @@ while True:
             message['busses'] = getCountType(wait_frame_count, 'bus')
             message['cars'] = getCountType(wait_frame_count, 'car')
             message['trucks'] =  getCountType(wait_frame_count, 'truck')
+            avg_co,avg_aqi = coreader_object.q.get()
+            message['AQI'] =  avg_aqi
+            message['CO'] =  avg_co
+
             # cityType 
             # city 
             messageJson = json.dumps(message)
