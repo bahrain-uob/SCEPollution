@@ -151,6 +151,7 @@ while True:
         return_value, frame = vid.read()
         if return_value:
             start_time = time.time()
+            # crop region of interest
             detections = Object_detector.detect(frame)
             if WarmUpCount < 9:
                 WarmUpCount += 1 
@@ -248,12 +249,8 @@ while True:
             messageJson = json.dumps(message)
             myAWSIoTMQTTClient.publish(topic, messageJson, 1)
             print('Published to IoT, DELAY 5 seconds')
-            print
             time.sleep(5)
             # reset values 
-            busses = 0
-            trucks = 0
-            cars = 0
             start = True
             total_start_time = 0
             wait_frame_count = {}
