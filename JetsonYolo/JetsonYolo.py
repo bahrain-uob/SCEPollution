@@ -185,26 +185,15 @@ while True:
                     continue 
                 bbox = track.to_tlbr()
                 class_name = track.get_class()
-                # if class_name == 'car':
-                #     cars += 1
-                # elif class_name == 'truck':
-                #     trucks += 1
-                # elif class_name == 'bus':
-                #     busses += 1
 
-                #counting frames for each track
-                # k = {
-                #     "0": {
-                #         "count": number of frames object x appeared
-                #         "class": car\truck\bus
-                #     }
-                # }
                 trackID=str(track.track_id)
                 if trackID in wait_frame_count.keys():
                     wait_frame_count[trackID]['count'] += 1  
                 else:
-                    wait_frame_count[trackID]['count'] = 1
-                    wait_frame_count[trackID]['class'] = class_name 
+                    wait_frame_count[trackID] = {
+                        'count': 1,
+                        'class': class_name
+                    }
 
                 
                 # output tracker information
