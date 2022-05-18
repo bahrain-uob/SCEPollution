@@ -219,7 +219,7 @@ while True:
             print(wait_frame_count)
             wait_time_count = {}
             for k in wait_frame_count:                
-                waittime = wait_frame_count[k] / fpscv2
+                waittime = wait_frame_count[k]['count'] / fpscv2
                 if waittime > 0:
                     wait_time_count[k]  = waittime
             print(wait_time_count)
