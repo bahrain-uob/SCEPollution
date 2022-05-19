@@ -239,7 +239,6 @@ while True:
             print(f"fps: {fpscv2}")
             # publish to IoT
             message = {} 
-            message['fps'] = fpscv2
             message['waittime'] = average_wait_time
             message['busses'] = getCountType(wait_frame_count, 'bus')
             message['cars'] = getCountType(wait_frame_count, 'car')
