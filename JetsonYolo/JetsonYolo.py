@@ -247,6 +247,10 @@ while True:
             avg_co,avg_aqi = coreader_object.q.get()
             message['AQI'] =  avg_aqi
             message['CO'] =  avg_co
+            message['cityType'] = 'res'
+            message['city'] = 'Madinat Hamad'
+            message['intersectionId'] = '09c1dfa6-bf51-49b3-8214-f6ad11aff852'
+            message['sensorId'] = 'f8735c0d-d3a6-45f0-b365-86810cbd1852'
 
             # cityType 
             # city 
