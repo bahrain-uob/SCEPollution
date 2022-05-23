@@ -1,3 +1,4 @@
+from lib2to3.refactor import get_all_fix_names
 import time
 import cv2
 import numpy as np
@@ -21,15 +22,19 @@ import json
 # CO Imports
 from readingSerial1 import COreader 
 import threading 
+import random 
 
 # Init thread
 coreader_object = COreader(arduino_port='/dev/ttyACM0') 
 t = threading.Thread(target=coreader_object.main, daemon= True)
 t.start() 
 
-# To do: 
+#TODO
 # - loop through different videos
 # - change time to send data to iot core (5 mins to 1 hour)
+vidList = ['1.mp4', '2.mp4']
+
+
 
 # Read in command-line parameters
 parser = argparse.ArgumentParser()
@@ -93,6 +98,24 @@ def getCountType(dictCounts, type):
             count += 1
     return count
 
+def getVid(vidList, basePath):
+    """ 
+    From a video list and base path for videos location, pick a random video to open as VideoCapture and return 
+    
+    vidList = ['VIDEONAME1', 'VIDEONAME2']
+
+    video object + fps 
+    """
+    vid = None
+    vidToPlay = random.choice(vidList)
+    video_path = basePath + vidToPlay
+    try:
+        vid = cv2.VideoCapture(int(video_path))
+    except:
+        vid = cv2.VideoCapture(video_path)
+    fps = vid.get(cv2.CAP_PROP_FPS)
+    return vid, fps
+
 # OBJECT TRACKING AND DETECTION
 Object_classes = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
                 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
@@ -123,31 +146,17 @@ metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance
 tracker = Tracker(metric)
 
 # begin video capture
-video_path="/home/JetsonYolo/cars.mp4"
-try:
-    vid = cv2.VideoCapture(int(video_path))
-except:
-    vid = cv2.VideoCapture(video_path)
-out = None
-
+base_path = "/home/JetsonYolo/videos/"
 print('start object detection')
 allowed_classes = ['car', 'motorbike', 'bus', 'truck']
-
-fpsCounter = 0
-fpsSum = 0
 total_start_time = 0
 start = True
 wait_frame_count = {}
 WarmUpCount = 0 
-fpscv2 = vid.get(cv2.CAP_PROP_FPS)
 
 while True:
-# start forever loop 
-    try:
-        vid = cv2.VideoCapture(int(video_path))
-    except:
-        vid = cv2.VideoCapture(video_path)
     out = None
+    vid, fpscv2 = getVid(vidList, base_path)
     while vid.isOpened():
         # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
         return_value, frame = vid.read()
@@ -221,9 +230,7 @@ while True:
             if visualize:
                 cv2.imshow("output", frame)
             fps = 1.0 / (time.time() - start_time)
-            fpsSum += fps
-            fpsCounter += 1
-            print("FPS: %.2f" % fps)
+            print("FPS Performance for object tracker: %.2f" % fps)
             if cv2.waitKey(1) & 0xFF == ord('q'): break
         # timing in seconds 
         elif time.time() - total_start_time  > 60 and not start: 
@@ -232,7 +239,7 @@ while True:
             wait_time_count = {}
             for k in wait_frame_count:                
                 waittime = wait_frame_count[k]['count'] / fpscv2
-                if waittime > 0:
+                if waittime > 5:
                     wait_time_count[k]  = waittime
             print(wait_time_count)
             # average wait time
@@ -269,7 +276,7 @@ while True:
             # vid = cv2.VideoCapture(video_path)
         else:
             print('Restarting the video')
-            vid = cv2.VideoCapture(video_path)
+            vid, fpscv2 = getVid(vidList, base_path)
     vid.release()
     cv2.destroyAllWindows()
 
