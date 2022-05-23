@@ -27,6 +27,7 @@ coreader_object = COreader(arduino_port='/dev/ttyACM0')
 t = threading.Thread(target=coreader_object.main, daemon= True)
 t.start() 
 
+#TODO
 
 
 # Read in command-line parameters
