@@ -157,10 +157,11 @@ WarmUpCount = 0
 while True:
     out = None
     vid, fpscv2 = getVid(vidList, base_path)
+    total_start_time = time.time()
     while vid.isOpened():
         # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
         return_value, frame = vid.read()
-        if return_value:
+        if return_value and  (time.time() - total_start_time  < 60):
             start_time = time.time()
             # crop region of interest
             detections = Object_detector.detect(frame)
@@ -233,7 +234,7 @@ while True:
             print("FPS Performance for object tracker: %.2f" % fps)
             if cv2.waitKey(1) & 0xFF == ord('q'): break
         # timing in seconds 
-        elif time.time() - total_start_time  > 60 and not start: 
+        elif time.time() - total_start_time > 60 and not start: 
             current = time.time()
             print(wait_frame_count)
             wait_time_count = {}
