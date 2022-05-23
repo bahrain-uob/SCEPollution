@@ -27,7 +27,9 @@ coreader_object = COreader(arduino_port='/dev/ttyACM0')
 t = threading.Thread(target=coreader_object.main, daemon= True)
 t.start() 
 
-
+# To do: 
+# - loop through different videos
+# - change time to send data to iot core (5 mins to 1 hour)
 
 # Read in command-line parameters
 parser = argparse.ArgumentParser()
