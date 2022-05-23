@@ -32,7 +32,7 @@ t.start()
 #TODO
 # - loop through different videos
 # - change time to send data to iot core (5 mins to 1 hour)
-vidList = ['1.mp4', '2.mp4']
+vidList = ['1.MOV', '2.MOV', '3.mp4']
 
 
 
