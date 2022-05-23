@@ -269,7 +269,7 @@ while True:
             time.sleep(5)
             # reset values 
             start = True
-            total_start_time = 0
+            total_start_time = time.time()
             wait_frame_count = {}
             k = time.time() - total_start_time  > 60
             print('boolean status')
