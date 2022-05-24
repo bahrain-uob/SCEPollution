@@ -272,6 +272,5 @@ while True:
             time.sleep(5)
             # reset values 
             wait_frame_count = {}
-    vid.release()
-    # cv2.destroyAllWindows()
+
 
