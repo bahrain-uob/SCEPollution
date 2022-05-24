@@ -169,7 +169,7 @@ while True:
             if WarmUpCount < 9:
                 WarmUpCount += 1 
                 continue
-
+            start_time = time.time()
             boxes = [] 
             labels = []
             scores = []
