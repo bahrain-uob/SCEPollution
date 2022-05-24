@@ -149,19 +149,20 @@ tracker = Tracker(metric)
 base_path = "/home/JetsonYolo/videos/"
 print('start object detection')
 allowed_classes = ['car', 'motorbike', 'bus', 'truck']
-total_start_time = 0
-start = True
 wait_frame_count = {}
 WarmUpCount = 0 
+# initial timing outside the loop 
+print('init first time')
+total_start_time = time.time()
+time.sleep(3)
+
 
 while True:
-    out = None
     vid, fpscv2 = getVid(vidList, base_path)
-    total_start_time = time.time()
     while vid.isOpened():
         # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
         return_value, frame = vid.read()
-        if return_value and  (time.time() - total_start_time  < 60):
+        if return_value:
             print("first if statement")
             start_time = time.time()
             # crop region of interest
@@ -169,9 +170,7 @@ while True:
             if WarmUpCount < 9:
                 WarmUpCount += 1 
                 continue
-            if start:
-                total_start_time = time.time() 
-                start = False
+
             boxes = [] 
             labels = []
             scores = []
@@ -217,8 +216,6 @@ while True:
                         'count': 1,
                         'class': class_name
                     }
-
-                
                 # output tracker information
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
                 # visualize 
@@ -235,9 +232,9 @@ while True:
             print("FPS Performance for object tracker: %.2f" % fps)
             if cv2.waitKey(1) & 0xFF == ord('q'): break
         # timing in seconds 
-        elif time.time() - total_start_time > 60 and not start:
-            print("second if statement") 
-            current = time.time()
+        if time.time() - total_start_time > 60:
+            #  do calculation and publish
+            print("Passed the threshold") 
             print(wait_frame_count)
             wait_time_count = {}
             for k in wait_frame_count:                
@@ -265,24 +262,13 @@ while True:
             message['city'] = 'Madinat Hamad'
             message['intersectionId'] = '09c1dfa6-bf51-49b3-8214-f6ad11aff852'
             message['sensorId'] = 'f8735c0d-d3a6-45f0-b365-86810cbd1852'
-
-            # cityType 
-            # city 
             messageJson = json.dumps(message)
             myAWSIoTMQTTClient.publish(topic, messageJson, 1)
-            print('Published to IoT, DELAY 5 seconds')
+            print('Published to IoT, DELAY 5 seconds + resetting start time')
+            total_start_time = time.time()
             time.sleep(5)
             # reset values 
-            start = True
-            total_start_time = time.time()
             wait_frame_count = {}
-            k = time.time() - total_start_time  > 60
-            print('boolean status')
-            print(k)
-            # vid = cv2.VideoCapture(video_path)
-        else:
-            print('Restarting the video')
-            vid, fpscv2 = getVid(vidList, base_path)
     vid.release()
     cv2.destroyAllWindows()
 
