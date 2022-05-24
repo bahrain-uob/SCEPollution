@@ -244,7 +244,10 @@ while True:
                     wait_time_count[k]  = waittime
             print(wait_time_count)
             # average wait time
-            average_wait_time = sum(wait_time_count.values()) / len(wait_time_count)
+            if len(wait_time_count) > 0:
+                average_wait_time = sum(wait_time_count.values()) / len(wait_time_count)
+            else:
+                average_wait_time = 0    
             print('The average wait time is: {}'.format(str(average_wait_time)))
             print(f"fps: {fpscv2}")
             # publish to IoT
