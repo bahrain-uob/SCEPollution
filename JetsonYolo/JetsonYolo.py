@@ -158,7 +158,8 @@ time.sleep(3)
 skipFirstTime = True
 while True:
     vid, fpscv2 = getVid(vidList, base_path)
-    print('restarting video')
+    print('############################################################ restarting video ############################################')
+    time.sleep(5)
     while vid.isOpened():
         # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
         return_value, frame = vid.read()
