@@ -155,20 +155,20 @@ WarmUpCount = 0
 print('init first time')
 total_start_time = time.time()
 time.sleep(3)
-
-
+skipFirstTime = True
 while True:
     vid, fpscv2 = getVid(vidList, base_path)
+    print('restarting video')
     while vid.isOpened():
         # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
         return_value, frame = vid.read()
         if return_value:
-            print("Processing frame and running calculation")
             # crop region of interest
             detections = Object_detector.detect(frame)
             if WarmUpCount < 9:
                 WarmUpCount += 1 
                 continue
+            print("Processing frame and running calculation")
             start_time = time.time()
             boxes = [] 
             labels = []
@@ -262,7 +262,10 @@ while True:
             message['intersectionId'] = '09c1dfa6-bf51-49b3-8214-f6ad11aff852'
             message['sensorId'] = 'f8735c0d-d3a6-45f0-b365-86810cbd1852'
             messageJson = json.dumps(message)
-            myAWSIoTMQTTClient.publish(topic, messageJson, 1)
+            if not skipFirstTime:
+                myAWSIoTMQTTClient.publish(topic, messageJson, 1)
+            else:
+                skipFirstTime = False
             print('Published to IoT, DELAY 5 seconds + resetting start time')
             total_start_time = time.time()
             time.sleep(5)
