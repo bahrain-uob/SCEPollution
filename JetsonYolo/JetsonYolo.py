@@ -163,8 +163,7 @@ while True:
         # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
         return_value, frame = vid.read()
         if return_value:
-            print("first if statement")
-            start_time = time.time()
+            print("Processing frame and running calculation")
             # crop region of interest
             detections = Object_detector.detect(frame)
             if WarmUpCount < 9:
